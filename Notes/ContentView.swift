@@ -8,19 +8,64 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+
+    var groups: [Group]
+    var notes: [Note]
+
+    @State private var selectedGroup: Group?
+    @State private var selectedNote: Note?
+
+    private var notesToShow: [Note] {
+        notes.filter {
+            $0.group == selectedGroup
         }
-        .padding()
+    }
+
+    var body: some View {
+        NavigationSplitView {
+            GroupListView(groups: groups, selection: $selectedGroup)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        addNewButton
+                    }
+                }
+        } content: {
+            if selectedGroup != nil {
+                NoteListView(notes: notesToShow, selection: $selectedNote)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            addNewButton
+                        }
+                    }
+            } else {
+                Text("Select a group")
+            }
+        } detail: {
+            if selectedNote != nil {
+                let noteBinding = Binding {
+                    selectedNote ?? Note(group: Group(name: ""), title: "")
+                } set: {
+                    selectedNote = $0
+                }
+
+                NoteEditorView(note: noteBinding)
+            } else {
+                Text("Select a note")
+            }
+        }
+    }
+    
+    private var addNewButton: some View {
+        Button {
+            
+        } label: {
+            Image(systemName: "plus")
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(groups: Model.testGroups, notes: Model.testNotes)
     }
 }
