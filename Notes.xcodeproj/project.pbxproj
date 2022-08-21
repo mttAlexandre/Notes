@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F04F9AF028B268C400D6BE35 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F9AEF28B268C400D6BE35 /* Model.swift */; };
 		F09FE96F28B167B800D00317 /* NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE96E28B167B800D00317 /* NotesApp.swift */; };
 		F09FE97128B167B800D00317 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE97028B167B800D00317 /* ContentView.swift */; };
 		F09FE97328B167B900D00317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F09FE97228B167B900D00317 /* Assets.xcassets */; };
@@ -14,6 +15,12 @@
 		F09FE98028B167BA00D00317 /* NotesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE97F28B167BA00D00317 /* NotesTests.swift */; };
 		F09FE98A28B167BA00D00317 /* NotesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE98928B167BA00D00317 /* NotesUITests.swift */; };
 		F09FE98C28B167BA00D00317 /* NotesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE98B28B167BA00D00317 /* NotesUITestsLaunchTests.swift */; };
+		F09FE99B28B1742100D00317 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE99A28B1742100D00317 /* GroupListView.swift */; };
+		F09FE99D28B1743700D00317 /* NoteListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE99C28B1743700D00317 /* NoteListView.swift */; };
+		F09FE99F28B1744B00D00317 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE99E28B1744B00D00317 /* NoteEditorView.swift */; };
+		F09FE9A228B1747F00D00317 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE9A128B1747F00D00317 /* Note.swift */; };
+		F0BA8A8328B2173D00BBC88D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BA8A8228B2173D00BBC88D /* Group.swift */; };
+		F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BA8A8528B2210900BBC88D /* Color+Codable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F04F9AEF28B268C400D6BE35 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F09FE96B28B167B800D00317 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09FE96E28B167B800D00317 /* NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesApp.swift; sourceTree = "<group>"; };
 		F09FE97028B167B800D00317 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +52,12 @@
 		F09FE98528B167BA00D00317 /* NotesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09FE98928B167BA00D00317 /* NotesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesUITests.swift; sourceTree = "<group>"; };
 		F09FE98B28B167BA00D00317 /* NotesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F09FE99A28B1742100D00317 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		F09FE99C28B1743700D00317 /* NoteListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteListView.swift; sourceTree = "<group>"; };
+		F09FE99E28B1744B00D00317 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
+		F09FE9A128B1747F00D00317 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		F0BA8A8228B2173D00BBC88D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		F0BA8A8528B2210900BBC88D /* Color+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +108,13 @@
 		F09FE96D28B167B800D00317 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
-				F09FE96E28B167B800D00317 /* NotesApp.swift */,
 				F09FE97028B167B800D00317 /* ContentView.swift */,
-				F09FE97228B167B900D00317 /* Assets.xcassets */,
+				F09FE96E28B167B800D00317 /* NotesApp.swift */,
+				F0BA8A8428B220D400BBC88D /* Extension */,
+				F09FE9A028B1747100D00317 /* Model */,
+				F09FE99928B173EA00D00317 /* View */,
 				F09FE97428B167B900D00317 /* Preview Content */,
+				F09FE97228B167B900D00317 /* Assets.xcassets */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -125,6 +142,34 @@
 				F09FE98B28B167BA00D00317 /* NotesUITestsLaunchTests.swift */,
 			);
 			path = NotesUITests;
+			sourceTree = "<group>";
+		};
+		F09FE99928B173EA00D00317 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F09FE99A28B1742100D00317 /* GroupListView.swift */,
+				F09FE99C28B1743700D00317 /* NoteListView.swift */,
+				F09FE99E28B1744B00D00317 /* NoteEditorView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F09FE9A028B1747100D00317 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F09FE9A128B1747F00D00317 /* Note.swift */,
+				F0BA8A8228B2173D00BBC88D /* Group.swift */,
+				F04F9AEF28B268C400D6BE35 /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F0BA8A8428B220D400BBC88D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				F0BA8A8528B2210900BBC88D /* Color+Codable.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,7 +315,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint && swiftlint --fix\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -279,8 +324,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F04F9AF028B268C400D6BE35 /* Model.swift in Sources */,
+				F0BA8A8328B2173D00BBC88D /* Group.swift in Sources */,
+				F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */,
 				F09FE97128B167B800D00317 /* ContentView.swift in Sources */,
+				F09FE99B28B1742100D00317 /* GroupListView.swift in Sources */,
+				F09FE99F28B1744B00D00317 /* NoteEditorView.swift in Sources */,
+				F09FE99D28B1743700D00317 /* NoteListView.swift in Sources */,
 				F09FE96F28B167B800D00317 /* NotesApp.swift in Sources */,
+				F09FE9A228B1747F00D00317 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
