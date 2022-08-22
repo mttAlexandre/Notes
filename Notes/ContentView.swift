@@ -14,6 +14,7 @@ struct ContentView: View {
 
     @State private var selectedGroup: Group?
     @State private var selectedNote: Note?
+    @State private var showNewNoteSheet = false
 
     private var notesToShow: [Note] {
         notes.filter {
@@ -23,6 +24,7 @@ struct ContentView: View {
 
     var body: some View {
         NavigationSplitView {
+            // Sidebar
             GroupListView(groups: groups, selection: $selectedGroup)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
@@ -42,6 +44,7 @@ struct ContentView: View {
             }
         } detail: {
             if selectedNote != nil {
+                // Require a custom binding to bind a non optional Note to the NoteEditorView
                 let noteBinding = Binding {
                     selectedNote ?? Note(group: Group(name: ""), title: "")
                 } set: {
@@ -49,20 +52,32 @@ struct ContentView: View {
                 }
 
                 NoteEditorView(note: noteBinding)
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            addNewButton
+                        }
+                    }
             } else {
                 Text("Select a note")
             }
         }
+        .sheet(isPresented: $showNewNoteSheet) {
+            NavigationStack {
+                NewNoteView(group: selectedGroup)
+            }
+        }
     }
-    
+
     private var addNewButton: some View {
         Button {
-            
+            showNewNoteSheet.toggle()
         } label: {
             Image(systemName: "plus")
         }
     }
 }
+
+// MARK: - Preview
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
