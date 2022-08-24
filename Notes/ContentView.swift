@@ -15,6 +15,12 @@ struct ContentView: View {
     @State private var selectedNote: Note?
     @State private var showNewNoteSheet = false
 
+    private var selectedNoteIndex: Int {
+        model.notes.firstIndex {
+            $0.title == selectedNote?.title ?? ""
+        }!
+    }
+
     private var notesToShow: [Note] {
         model.notes.filter {
             $0.group == selectedGroup
@@ -43,14 +49,7 @@ struct ContentView: View {
             }
         } detail: {
             if selectedNote != nil {
-                // Require a custom binding to bind a non optional Note to the NoteEditorView
-                let noteBinding = Binding {
-                    selectedNote ?? Note(group: Group(name: ""), title: "")
-                } set: {
-                    selectedNote = $0
-                }
-
-                NoteEditorView(note: noteBinding)
+                NoteEditorView(note: $model.notes[selectedNoteIndex])
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             addNewButton

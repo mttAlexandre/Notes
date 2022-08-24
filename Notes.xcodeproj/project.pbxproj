@@ -21,6 +21,7 @@
 		F09FE99F28B1744B00D00317 /* NoteEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE99E28B1744B00D00317 /* NoteEditorView.swift */; };
 		F09FE9A228B1747F00D00317 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE9A128B1747F00D00317 /* Note.swift */; };
 		F0A5DE6C28B6B78F00C0FDA9 /* Color+random.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A5DE6B28B6B78F00C0FDA9 /* Color+random.swift */; };
+		F0A5DE6E28B6BF7C00C0FDA9 /* TODO.rtf in Resources */ = {isa = PBXBuildFile; fileRef = F0A5DE6D28B6BF7C00C0FDA9 /* TODO.rtf */; };
 		F0BA8A8328B2173D00BBC88D /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BA8A8228B2173D00BBC88D /* Group.swift */; };
 		F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BA8A8528B2210900BBC88D /* Color+Codable.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		F09FE99E28B1744B00D00317 /* NoteEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteEditorView.swift; sourceTree = "<group>"; };
 		F09FE9A128B1747F00D00317 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		F0A5DE6B28B6B78F00C0FDA9 /* Color+random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+random.swift"; sourceTree = "<group>"; };
+		F0A5DE6D28B6BF7C00C0FDA9 /* TODO.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = TODO.rtf; sourceTree = "<group>"; };
 		F0BA8A8228B2173D00BBC88D /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		F0BA8A8528B2210900BBC88D /* Color+Codable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Codable.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 				F09FE9A028B1747100D00317 /* Model */,
 				F09FE97428B167B900D00317 /* Preview Content */,
 				F09FE99928B173EA00D00317 /* View */,
+				F0A5DE6D28B6BF7C00C0FDA9 /* TODO.rtf */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			files = (
 				F09FE97628B167B900D00317 /* Preview Assets.xcassets in Resources */,
 				F09FE97328B167B900D00317 /* Assets.xcassets in Resources */,
+				F0A5DE6E28B6BF7C00C0FDA9 /* TODO.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,22 +17,20 @@ struct NewNoteView: View {
     @State private var errorMessage = ""
 
     @StateObject private var viewModel: NewNoteViewModel
-    @State private var newGroup = false
 
     init(group: Group?) {
         _viewModel = StateObject(wrappedValue: NewNoteViewModel(model: Model(), group: group))
-        _newGroup = State(initialValue: group == nil)
     }
 
     var body: some View {
         Form {
             Section("Group") {
-                Toggle(isOn: $newGroup) {
+                Toggle(isOn: $viewModel.createNewGroup) {
                     Text("Create new group")
                         .bold()
                 }
 
-                if newGroup {
+                if viewModel.createNewGroup {
                     ColorPicker("Group color",
                                 selection: $viewModel.newNote.group.color,
                                 supportsOpacity: false)
@@ -130,16 +128,33 @@ enum SaveError: Error {
 private final class NewNoteViewModel: ObservableObject {
 
     @Published var newNote: Note
+    @Published var createNewGroup: Bool
     var model: Model
 
     init(model: Model, group: Group?) {
         self.model = model
         self.newNote = Note(group: group ?? Group(name: ""), title: "")
+        self.createNewGroup = group == nil
     }
 
     func saveNewNote() throws {
-        // TODO: save note
-//        throw SaveError.groupError("A group with this name already exists")
-        throw SaveError.noteError("A note with this title already exists")
+        if !createNewGroup {
+            if newNote.group.name.isEmpty {
+                throw SaveError.groupError("Group name cannot be empty")
+            }
+
+            let existingGroupName = model.groups.map { $0.name }
+
+            if existingGroupName.contains(newNote.group.name) {
+                throw SaveError.groupError("A group with this name already exists")
+            }
+        }
+
+        if newNote.title.isEmpty {
+            throw SaveError.noteError("A note with this title already exists")
+        }
+
+        model.groups.append(newNote.group)
+        model.notes.append(newNote)
     }
 }
