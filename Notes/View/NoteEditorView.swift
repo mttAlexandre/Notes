@@ -35,7 +35,7 @@ struct NoteEditorView: View {
 
 struct NoteEditorView_Previews: PreviewProvider {
 
-    @State private static var note = Model.testNotes.first!
+    @State private static var note = Model().notes.first!
 
     static var previews: some View {
         NoteEditorView(note: $note)

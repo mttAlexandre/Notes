@@ -50,9 +50,10 @@ struct NoteListView: View {
 
 struct NoteListView_Previews: PreviewProvider {
 
-    @State static var selection: Note? = Model.testNotes.first!
+    @StateObject private static var model = Model()
+    @State static var selection: Note?
 
     static var previews: some View {
-        NoteListView(notes: Model.testNotes, selection: $selection)
+        NoteListView(notes: model.notes, selection: $selection)
     }
 }

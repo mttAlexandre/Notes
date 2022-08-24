@@ -9,15 +9,14 @@ import SwiftUI
 
 struct ContentView: View {
 
-    var groups: [Group]
-    var notes: [Note]
+    @EnvironmentObject var model: Model
 
     @State private var selectedGroup: Group?
     @State private var selectedNote: Note?
     @State private var showNewNoteSheet = false
 
     private var notesToShow: [Note] {
-        notes.filter {
+        model.notes.filter {
             $0.group == selectedGroup
         }
     }
@@ -25,7 +24,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             // Sidebar
-            GroupListView(groups: groups, selection: $selectedGroup)
+            GroupListView(groups: model.groups, selection: $selectedGroup)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         addNewButton
@@ -80,7 +79,10 @@ struct ContentView: View {
 // MARK: - Preview
 
 struct ContentView_Previews: PreviewProvider {
+    @StateObject private static var model = Model()
+
     static var previews: some View {
-        ContentView(groups: Model.testGroups, notes: Model.testNotes)
+        ContentView()
+            .environmentObject(model)
     }
 }

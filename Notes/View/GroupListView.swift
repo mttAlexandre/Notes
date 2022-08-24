@@ -51,6 +51,6 @@ struct GroupListView_Previews: PreviewProvider {
     @State static var selection: Group?
 
     static var previews: some View {
-        GroupListView(groups: Model.testGroups, selection: $selection)
+        GroupListView(groups: Model().groups, selection: $selection)
     }
 }

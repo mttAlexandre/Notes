@@ -49,7 +49,7 @@ struct NewNoteView: View {
                     }
                 } else {
                     Picker("Choose a group", selection: $viewModel.newNote.group) {
-                        ForEach(Model.testGroups) { group in
+                        ForEach(viewModel.model.groups) { group in
                             Text(group.name)
                                 .tag(group)
                         }
@@ -110,7 +110,7 @@ struct NewNoteView: View {
 // MARK: - Preview
 
 struct NewNoteView_Previews: PreviewProvider {
-    static let group = Model.testGroups.first
+    static let group = Model().groups.first
 
     static var previews: some View {
         NavigationStack {
