@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct NewNoteView: View {
+struct EditNoteView: View {
 
     @Environment(\.dismiss) private var dismiss
+
+    @Binding var selectedGroup: Group?
+    @Binding var selectedNote: Note?
 
     // error handling
     @State private var showGroupError = false
@@ -18,8 +21,14 @@ struct NewNoteView: View {
 
     @StateObject private var viewModel: NewNoteViewModel
 
-    init(group: Group?) {
-        _viewModel = StateObject(wrappedValue: NewNoteViewModel(model: Model(), group: group))
+    init(noteToEdit: Note? = nil, model: Model, selectedGroup: Binding<Group?>, selectedNote: Binding<Note?>) {
+        _selectedGroup = selectedGroup
+        _selectedNote = selectedNote
+        _viewModel = StateObject(wrappedValue:
+                                    NewNoteViewModel(noteToEdit: noteToEdit,
+                                                     model: model,
+                                                     group: selectedGroup.wrappedValue)
+        )
     }
 
     var body: some View {
@@ -85,7 +94,7 @@ struct NewNoteView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     do {
-                        try viewModel.saveNewNote()
+                        try viewModel.save()
                         dismiss()
                     } catch SaveError.groupError(let message) {
                         errorMessage = message
@@ -102,20 +111,33 @@ struct NewNoteView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.didFinishSaving = navigateToNewNote
+        }
+    }
+
+    private func navigateToNewNote(_ note: Note) {
+        DispatchQueue.main.async {
+            self.selectedGroup = viewModel.newNote.group
+            self.selectedNote = viewModel.newNote
+        }
     }
 }
 
 // MARK: - Preview
 
-struct NewNoteView_Previews: PreviewProvider {
-    static let group = Model().groups.first
+ struct EditNoteView_Previews: PreviewProvider {
+
+     @State static var model = Model()
+     @State static var selectedNote: Note?
+     @State static var selectedGroup: Group? = Model().groups.first
 
     static var previews: some View {
         NavigationStack {
-            NewNoteView(group: group)
+            EditNoteView(model: model, selectedGroup: $selectedGroup, selectedNote: $selectedNote)
         }
     }
-}
+ }
 
 // MARK: - View Model
 
@@ -129,16 +151,20 @@ private final class NewNoteViewModel: ObservableObject {
 
     @Published var newNote: Note
     @Published var createNewGroup: Bool
-    var model: Model
+    @Published var model: Model
+    var didFinishSaving: (Note) -> Void = { _ in return }
 
-    init(model: Model, group: Group?) {
+    init(noteToEdit: Note? = nil, model: Model, group: Group?) {
         self.model = model
-        self.newNote = Note(group: group ?? Group(name: ""), title: "")
+        self.newNote = noteToEdit ?? Note(
+            group: group ?? Group(name: ""),
+            title: ""
+        )
         self.createNewGroup = group == nil
     }
 
-    func saveNewNote() throws {
-        if !createNewGroup {
+    func save() throws {
+        if createNewGroup {
             if newNote.group.name.isEmpty {
                 throw SaveError.groupError("Group name cannot be empty")
             }
@@ -150,11 +176,35 @@ private final class NewNoteViewModel: ObservableObject {
             }
         }
 
+        if !createNewGroup {
+            let existingNoteTitleForGroup = model.notes.compactMap {
+                $0.group == newNote.group ? $0.title : nil
+            }
+
+            if existingNoteTitleForGroup.contains(newNote.title) {
+                throw SaveError.noteError("A note with this name already exists")
+            }
+        }
+
         if newNote.title.isEmpty {
             throw SaveError.noteError("A note with this title already exists")
         }
 
-        model.groups.append(newNote.group)
-        model.notes.append(newNote)
+        if createNewGroup {
+            model.groups.append(newNote.group)
+        }
+
+        // edit an existing note
+        if let index = model.notes.firstIndex(where: {
+            $0.id == newNote.id
+        }) {
+            model.notes[index] = newNote
+        }
+        // create a note
+        else {
+            model.notes.append(newNote)
+        }
+
+        didFinishSaving(newNote)
     }
 }

@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var selectedGroup: Group?
     @State private var selectedNote: Note?
     @State private var showNewNoteSheet = false
+    @State private var editSheet = false
 
     private var selectedNoteIndex: Int {
         model.notes.firstIndex {
@@ -49,10 +50,22 @@ struct ContentView: View {
             }
         } detail: {
             if selectedNote != nil {
-                NoteEditorView(note: $model.notes[selectedNoteIndex])
+                NoteDetailView(note: $model.notes[selectedNoteIndex])
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            addNewButton
+                            Button {
+                                editSheet.toggle()
+                            } label: {
+                                Image(systemName: "ellipsis.circle")
+                            }
+                        }
+                    }
+                    .sheet(isPresented: $editSheet) {
+                        NavigationStack {
+                            EditNoteView(noteToEdit: selectedNote,
+                                         model: model,
+                                         selectedGroup: $selectedGroup,
+                                         selectedNote: $selectedNote)
                         }
                     }
             } else {
@@ -61,7 +74,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showNewNoteSheet) {
             NavigationStack {
-                NewNoteView(group: selectedGroup)
+                EditNoteView(model: model,
+                            selectedGroup: $selectedGroup,
+                            selectedNote: $selectedNote)
             }
         }
     }
