@@ -9,6 +9,8 @@ import SwiftUI
 
 struct NoteListView: View {
 
+    @EnvironmentObject var model: Model
+
     let notes: [Note]
     @Binding var selection: Note?
 
@@ -19,30 +21,49 @@ struct NoteListView: View {
     }
 
     var body: some View {
-        List(sortedNotes, selection: $selection) { note in
-            NavigationLink(value: note) {
-                Text(note.title)
-                    .bold()
-                    .underline(selection == note, color: note.titleColor)
-                    .foregroundColor(note.titleColor)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal)
-                    .background {
-                        note.titleColor
-                            .opacity(selection == note ? 0.05 : 0)
-                            .cornerRadius(5)
-                    }
+        List {
+            ForEach(sortedNotes) { note in
+                NavigationLink(value: note) {
+                    Text(note.title)
+                        .bold()
+                        .underline(selection == note, color: note.titleColor)
+                        .foregroundColor(note.titleColor)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.vertical, 8)
+                        .padding(.horizontal)
+                        .background {
+                            note.titleColor
+                                .opacity(getBackgroundOpacity(note))
+                                .cornerRadius(5)
+                        }
+                }
+                .listRowBackground(
+                    note.titleColor
+                        .opacity(0.1)
+                        .cornerRadius(5)
+                )
+                .contentShape(RoundedRectangle(cornerRadius: 5))
+                .onTapGesture {
+                    selection = note
+                }
             }
-            .listRowBackground(
-                note.titleColor
-                    .opacity(0.1)
-                    .cornerRadius(5)
-            )
+            .onDelete(perform: delete)
         }
         .listStyle(.sidebar)
         .cornerRadius(16)
         .navigationTitle(notes.first!.group.name)
+    }
+
+    private func delete(at offsets: IndexSet) {
+        let noteToDelete = sortedNotes[offsets[offsets.startIndex]]
+
+        model.notes.removeAll {
+            $0 == noteToDelete
+        }
+    }
+
+    private func getBackgroundOpacity(_ note: Note) -> Double {
+        selection == note ? 0.05 : 0
     }
 }
 
