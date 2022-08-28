@@ -33,14 +33,14 @@ final class Model: ObservableObject {
         notes = [
             Note(group: groups[1], title: "🍩 Donuts", titleColor: .pink,
                  content: """
-    Ingredients :
+    **Ingredients :**
         - eggs
         - sugar
         - flour
     """),
             Note(group: groups[1], title: "🍫 Chocolat cake", titleColor: .brown,
                  content: """
-    Ingredients :
+    **Ingredients :**
         - chocolat
         - eggs
         - sugar

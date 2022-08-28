@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NoteEditorView: View {
+struct NoteContentEditorView: View {
 
     @Binding var note: Note
 
@@ -33,11 +33,11 @@ struct NoteEditorView: View {
 
 // MARK: - Preview
 
-struct NoteEditorView_Previews: PreviewProvider {
+struct NoteContentEditorView_Previews: PreviewProvider {
 
     @State private static var note = Model().notes.first!
 
     static var previews: some View {
-        NoteEditorView(note: $note)
+        NoteContentEditorView(note: $note)
     }
 }
