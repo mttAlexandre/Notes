@@ -38,13 +38,20 @@ struct EditNoteView: View {
                     Text("Create new group")
                         .bold()
                 }
+                .onChange(of: viewModel.createNewGroup) {
+                    if $0 {
+                        viewModel.note.group = Group(name: "")
+                    } else {
+                        viewModel.note.group = selectedGroup ?? Group(name: "")
+                    }
+                }
 
                 if viewModel.createNewGroup {
                     ColorPicker("Group color",
-                                selection: $viewModel.newNote.group.color,
+                                selection: $viewModel.note.group.color,
                                 supportsOpacity: false)
 
-                    TextField("Group name", text: $viewModel.newNote.group.name)
+                    TextField("Group name", text: $viewModel.note.group.name)
                     .textFieldStyle(.roundedBorder)
 
                     if showGroupError {
@@ -55,7 +62,7 @@ struct EditNoteView: View {
                             .bold()
                     }
                 } else {
-                    Picker("Choose a group", selection: $viewModel.newNote.group) {
+                    Picker("Choose a group", selection: $viewModel.note.group) {
                         ForEach(viewModel.model.groups) { group in
                             Text(group.name)
                                 .tag(group)
@@ -66,10 +73,10 @@ struct EditNoteView: View {
 
             Section("Note") {
                 ColorPicker("Note color",
-                            selection: $viewModel.newNote.titleColor,
+                            selection: $viewModel.note.titleColor,
                             supportsOpacity: false)
 
-                TextField("Note title", text: $viewModel.newNote.title)
+                TextField("Note title", text: $viewModel.note.title)
                     .textFieldStyle(.roundedBorder)
 
                 if showNoteError {
@@ -96,10 +103,10 @@ struct EditNoteView: View {
                     do {
                         try viewModel.save()
                         dismiss()
-                    } catch SaveError.groupError(let message) {
+                    } catch ModelError.groupError(let message) {
                         errorMessage = message
                         showGroupError = true
-                    } catch SaveError.noteError(let message) {
+                    } catch ModelError.noteError(let message) {
                         errorMessage = message
                         showNoteError = true
                     } catch {
@@ -118,8 +125,8 @@ struct EditNoteView: View {
 
     private func navigateToNewNote(_ note: Note) {
         DispatchQueue.main.async {
-            self.selectedGroup = viewModel.newNote.group
-            self.selectedNote = viewModel.newNote
+            self.selectedGroup = viewModel.note.group
+            self.selectedNote = viewModel.note
         }
     }
 }
@@ -141,22 +148,18 @@ struct EditNoteView: View {
 
 // MARK: - View Model
 
-enum SaveError: Error {
-    case groupError(String)
-    case noteError(String)
-    case none
-}
-
 private final class NewNoteViewModel: ObservableObject {
 
-    @Published var newNote: Note
+    @Published var note: Note
     @Published var createNewGroup: Bool
     @Published var model: Model
     var didFinishSaving: (Note) -> Void = { _ in return }
+    private let newNote: Bool
 
     init(noteToEdit: Note? = nil, model: Model, group: Group?) {
+        self.newNote = noteToEdit == nil
         self.model = model
-        self.newNote = noteToEdit ?? Note(
+        self.note = noteToEdit ?? Note(
             group: group ?? Group(name: ""),
             title: ""
         )
@@ -164,47 +167,12 @@ private final class NewNoteViewModel: ObservableObject {
     }
 
     func save() throws {
-        if createNewGroup {
-            if newNote.group.name.isEmpty {
-                throw SaveError.groupError("Group name cannot be empty")
-            }
-
-            let existingGroupName = model.groups.map { $0.name }
-
-            if existingGroupName.contains(newNote.group.name) {
-                throw SaveError.groupError("A group with this name already exists")
-            }
+        if newNote {
+            try model.addNote(note)
+        } else {
+            try model.modifyNote(note)
         }
 
-        if !createNewGroup {
-            let existingNoteTitleForGroup = model.notes.compactMap {
-                $0.group == newNote.group ? $0.title : nil
-            }
-
-            if existingNoteTitleForGroup.contains(newNote.title) {
-                throw SaveError.noteError("A note with this name already exists")
-            }
-        }
-
-        if newNote.title.isEmpty {
-            throw SaveError.noteError("A note with this title already exists")
-        }
-
-        if createNewGroup {
-            model.groups.append(newNote.group)
-        }
-
-        // edit an existing note
-        if let index = model.notes.firstIndex(where: {
-            $0.id == newNote.id
-        }) {
-            model.notes[index] = newNote
-        }
-        // create a note
-        else {
-            model.notes.append(newNote)
-        }
-
-        didFinishSaving(newNote)
+        didFinishSaving(note)
     }
 }
