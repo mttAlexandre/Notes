@@ -17,8 +17,8 @@ struct Note: Identifiable, Hashable, Codable {
     var titleColor: Color
     var content: String
 
-    init(group: Group, title: String, titleColor: Color = .random, content: String = "") {
-        self.id = UUID()
+    init(id: UUID = UUID(), group: Group, title: String, titleColor: Color = .random, content: String = "") {
+        self.id = id
         self.group = group
         self.title = title
         self.titleColor = titleColor

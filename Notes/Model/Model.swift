@@ -25,42 +25,19 @@ final class Model: ObservableObject {
 #endif
     }
 
-// MARK: - DEBUG data
-
-#if DEBUG
-    private func generateSampleData() {
-        groups = [
-            Group(name: "🏠 Home"),
-            Group(name: "📕 Recipes", color: .teal),
-            Group(name: "💻 Work", color: .purple),
-            Group(name: "🏖 Holidays", color: .mint)
-        ]
-
-        notes = [
-            Note(group: groups[1], title: "🍩 Donuts", titleColor: .pink,
-                 content: """
-    **Ingredients :**
-        - eggs
-        - sugar
-        - flour
-    """),
-            Note(group: groups[1], title: "🍫 Chocolat cake", titleColor: .brown,
-                 content: """
-    **Ingredients :**
-        - chocolat
-        - eggs
-        - sugar
-        - flour
-    """),
-            Note(group: groups[0], title: "🪴 Garden", titleColor: .green, content: ""),
-            Note(group: groups[2], title: "🚨 Deadlines", titleColor: .red, content: ""),
-            Note(group: groups[2], title: "☑ Todo", titleColor: .indigo, content: ""),
-            Note(group: groups[3], title: "🏔 Hikes", titleColor: .green, content: ""),
-            Note(group: groups[3], title: "⛈ Indoor activities", titleColor: .blue, content: ""),
-            Note(group: groups[3], title: "🧳 Bags", titleColor: .orange, content: "")
-        ]
+    private static func storageURL() throws -> URL {
+        try FileManager.default.url(for: .documentDirectory,
+                                    in: .userDomainMask,
+                                    appropriateFor: nil,
+                                    create: false)
+        .appendingPathComponent("Storage.sqlite")
     }
-#endif
+
+    func load() {
+
+    }
+
+// MARK: - Group handling
 
     func addGroup(_ group: Group) throws {
         if group.name.isEmpty {
@@ -79,6 +56,8 @@ final class Model: ObservableObject {
             $0 == group
         }
     }
+
+// MARK: - Note handling
 
     func addNote(_ note: Note) throws {
         if !groups.contains(note.group) {
@@ -123,4 +102,41 @@ final class Model: ObservableObject {
 
         notes[index] = note
     }
+
+// MARK: - DEBUG data
+
+    #if DEBUG
+        private func generateSampleData() {
+            groups = [
+                Group(name: "🏠 Home"),
+                Group(name: "📕 Recipes", color: .teal),
+                Group(name: "💻 Work", color: .purple),
+                Group(name: "🏖 Holidays", color: .mint)
+            ]
+
+            notes = [
+                Note(group: groups[1], title: "🍩 Donuts", titleColor: .pink,
+                     content: """
+        **Ingredients :**
+            - eggs
+            - sugar
+            - flour
+        """),
+                Note(group: groups[1], title: "🍫 Chocolat cake", titleColor: .brown,
+                     content: """
+        **Ingredients :**
+            - chocolat
+            - eggs
+            - sugar
+            - flour
+        """),
+                Note(group: groups[0], title: "🪴 Garden", titleColor: .green, content: ""),
+                Note(group: groups[2], title: "🚨 Deadlines", titleColor: .red, content: ""),
+                Note(group: groups[2], title: "☑ Todo", titleColor: .indigo, content: ""),
+                Note(group: groups[3], title: "🏔 Hikes", titleColor: .green, content: ""),
+                Note(group: groups[3], title: "⛈ Indoor activities", titleColor: .blue, content: ""),
+                Note(group: groups[3], title: "🧳 Bags", titleColor: .orange, content: "")
+            ]
+        }
+    #endif
 }
