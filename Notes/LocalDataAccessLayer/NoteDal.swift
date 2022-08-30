@@ -94,6 +94,13 @@ class NoteDal {
         })
     }
 
+    func deleteAllWithGroup(_ group: Group, db: Connection? = nil) throws {
+        try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
+            let noteToDelete = notes.filter(groupFK == group.id.description)
+            try db.run(noteToDelete.delete())
+        })
+    }
+
     func dropTable(ifExists exists: Bool = false, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
             try db.run(notes.drop(ifExists: exists))
