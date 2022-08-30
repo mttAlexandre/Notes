@@ -21,7 +21,7 @@ struct GroupListView: View {
     }
 
     var body: some View {
-        List {
+        List(selection: $selection) {
             ForEach(sortedGroups) { group in
                 NavigationLink(value: group) {
                     Text(group.name)
@@ -43,12 +43,10 @@ struct GroupListView: View {
                         .cornerRadius(5)
                 )
                 .contentShape(RoundedRectangle(cornerRadius: 5))
-                .onTapGesture {
-                    selection = group
-                }
             }
             .onDelete(perform: delete)
         }
+        .toolbar { EditButton() }
         .navigationTitle("Notes 📝")
     }
 

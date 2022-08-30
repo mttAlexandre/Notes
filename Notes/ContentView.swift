@@ -75,8 +75,8 @@ struct ContentView: View {
         .sheet(isPresented: $showNewNoteSheet) {
             NavigationStack {
                 EditNoteView(model: model,
-                            selectedGroup: $selectedGroup,
-                            selectedNote: $selectedNote)
+                             selectedGroup: $selectedGroup,
+                             selectedNote: $selectedNote)
             }
         }
     }

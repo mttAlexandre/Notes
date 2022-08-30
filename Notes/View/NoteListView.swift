@@ -21,7 +21,7 @@ struct NoteListView: View {
     }
 
     var body: some View {
-        List {
+        List(selection: $selection) {
             ForEach(sortedNotes) { note in
                 NavigationLink(value: note) {
                     Text(note.title)
@@ -43,14 +43,12 @@ struct NoteListView: View {
                         .cornerRadius(5)
                 )
                 .contentShape(RoundedRectangle(cornerRadius: 5))
-                .onTapGesture {
-                    selection = note
-                }
             }
             .onDelete(perform: delete)
         }
         .listStyle(.sidebar)
         .cornerRadius(16)
+        .toolbar { EditButton() }
         .navigationTitle(notes.first!.group.name)
     }
 
