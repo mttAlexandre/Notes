@@ -51,14 +51,11 @@ struct GroupListView: View {
     }
 
     private func delete(at offsets: IndexSet) {
-        let groupToDelete = sortedGroups[offsets[offsets.startIndex]]
-        // delete all notes in this group
-        model.notes.removeAll {
-            $0.group == groupToDelete
-        }
-        // delete the group itself
-        model.groups.removeAll {
-            $0 == groupToDelete
+        do {
+            let groupToDelete = sortedGroups[offsets[offsets.startIndex]]
+            try model.deleteGroup(groupToDelete)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 

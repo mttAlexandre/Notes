@@ -53,10 +53,11 @@ struct NoteListView: View {
     }
 
     private func delete(at offsets: IndexSet) {
-        let noteToDelete = sortedNotes[offsets[offsets.startIndex]]
-
-        model.notes.removeAll {
-            $0 == noteToDelete
+        do {
+            let noteToDelete = sortedNotes[offsets[offsets.startIndex]]
+            try model.deleteNote(noteToDelete)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 

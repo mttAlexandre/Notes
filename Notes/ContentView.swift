@@ -79,6 +79,13 @@ struct ContentView: View {
                              selectedNote: $selectedNote)
             }
         }
+        .onAppear {
+            do {
+                try model.load()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     }
 
     private var addNewButton: some View {
