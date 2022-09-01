@@ -43,7 +43,7 @@ class GroupDal {
                 for group in try db.prepare(groups) {
                     res.append(Group(id: UUID(uuidString: group[id])!,
                                      name: group[name],
-                                     color: Color(hex: group[color])))
+                                     color: Color(hex: group[color]) ?? Color.black))
                 }
             })
 
@@ -59,7 +59,7 @@ class GroupDal {
             try createTable(db)
             let insert = groups.insert(id <- group.id.description,
                                        name <- group.name,
-                                       color <- group.color.toHex!)
+                                       color <- group.color.toHex() ?? "")
             try db.run(insert)
         })
     }
@@ -69,7 +69,7 @@ class GroupDal {
             try createTable(db)
             let groupToUpdate = groups.filter(id == group.id.description)
             try db.run(groupToUpdate.update(name <- group.name,
-                                            color <- group.color.toHex!))
+                                            color <- group.color.toHex() ?? ""))
         })
     }
 

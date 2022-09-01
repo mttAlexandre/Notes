@@ -52,7 +52,7 @@ class NoteDal {
                     res.append(Note(id: UUID(uuidString: note[id])!,
                                     group: Group(name: ""),
                                     title: note[title],
-                                    titleColor: Color(hex: note[titleColor]),
+                                    titleColor: Color(hex: note[titleColor]) ?? Color.black,
                                     content: note[content]))
                 }
             })
@@ -69,7 +69,7 @@ class NoteDal {
             try createTable(db)
             let insert = notes.insert(id <- note.id.description,
                                       title <- note.title,
-                                      titleColor <- note.titleColor.toHex!,
+                                      titleColor <- note.titleColor.toHex() ?? "",
                                       content <- note.content,
                                       groupFK <- note.group.id.description)
             try db.run(insert)
@@ -81,7 +81,7 @@ class NoteDal {
             try createTable(db)
             let noteToUpdate = notes.filter(id == note.id.description)
             try db.run(noteToUpdate.update(title <- note.title,
-                                           titleColor <- note.titleColor.toHex!,
+                                           titleColor <- note.titleColor.toHex() ?? "",
                                            content <- note.content,
                                            groupFK <- note.group.id.description))
         })
