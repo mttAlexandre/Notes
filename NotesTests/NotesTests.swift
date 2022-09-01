@@ -9,6 +9,7 @@ import XCTest
 @testable import Notes
 import SQLite
 import SQLiteObjc
+import SwiftUI
 
 final class NotesTests: XCTestCase {
 
@@ -51,6 +52,17 @@ final class NotesTests: XCTestCase {
         // verify group count and update
         XCTAssertEqual(groups.count, 1)
         XCTAssertEqual(groups.first!.name, "Modified name")
+    }
+
+    func testColorCodable() throws {
+        for _ in 0...500 {
+            let colorA = Color.random
+            let hex = colorA.toHex()
+            XCTAssertNotNil(hex)
+            let colorB = Color(hex: hex!)
+            XCTAssertNotNil(colorB)
+            XCTAssertEqual(colorA.description, colorB!.description)
+        }
     }
 
 }

@@ -11,6 +11,7 @@
 		F048CCFA28BB5CFA003A6ED8 /* NotePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */; };
 		F04F9AF028B268C400D6BE35 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F9AEF28B268C400D6BE35 /* Model.swift */; };
 		F04F9AF228B2BF7800D6BE35 /* EditNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F9AF128B2BF7800D6BE35 /* EditNoteView.swift */; };
+		F059162B28C1400100485D37 /* Color+hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = F059162A28C1400100485D37 /* Color+hex.swift */; };
 		F09FE96F28B167B800D00317 /* NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE96E28B167B800D00317 /* NotesApp.swift */; };
 		F09FE97128B167B800D00317 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09FE97028B167B800D00317 /* ContentView.swift */; };
 		F09FE97328B167B900D00317 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F09FE97228B167B900D00317 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePreviewView.swift; sourceTree = "<group>"; };
 		F04F9AEF28B268C400D6BE35 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		F04F9AF128B2BF7800D6BE35 /* EditNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNoteView.swift; sourceTree = "<group>"; };
+		F059162A28C1400100485D37 /* Color+hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+hex.swift"; sourceTree = "<group>"; };
 		F09FE96B28B167B800D00317 /* Notes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F09FE96E28B167B800D00317 /* NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesApp.swift; sourceTree = "<group>"; };
 		F09FE97028B167B800D00317 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				F0BA8A8528B2210900BBC88D /* Color+Codable.swift */,
+				F059162A28C1400100485D37 /* Color+hex.swift */,
 				F0A5DE6B28B6B78F00C0FDA9 /* Color+random.swift */,
 			);
 			path = Extension;
@@ -384,6 +387,7 @@
 				F0A5DE6C28B6B78F00C0FDA9 /* Color+random.swift in Sources */,
 				F0BA8A8328B2173D00BBC88D /* Group.swift in Sources */,
 				F048CCF828BB5C97003A6ED8 /* NoteDetailView.swift in Sources */,
+				F059162B28C1400100485D37 /* Color+hex.swift in Sources */,
 				F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */,
 				F0BB0E8628BD155D00671503 /* GroupDal.swift in Sources */,
 				F04F9AF228B2BF7800D6BE35 /* EditNoteView.swift in Sources */,

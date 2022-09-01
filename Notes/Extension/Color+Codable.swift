@@ -1,5 +1,5 @@
 //
-//  UIColor+rgba.swift
+//  Color+Codable.swift
 //  Notes
 //
 //  Created by Alexandre MONTCUIT on 21/08/2022.
@@ -8,95 +8,51 @@
 import Foundation
 import SwiftUI
 
-// https://gist.github.com/peterfriese/bb2fc5df202f6a15cc807bd87ff15193
-// swiftlint:disable identifier_name large_tuple
+//http://brunowernimont.me/howtos/make-swiftui-color-codable
 
-// Inspired by https://cocoacasts.com/from-hex-to-uicolor-and-back-in-swift
-// Make Color codable. This includes support for transparency.
-// See https://www.digitalocean.com/community/tutorials/css-hex-code-colors-alpha-values
-extension Color: Codable {
-    init(hex: String) {
-        let rgba = hex.toRGBA()
+// swiftlint: disable large_tuple identifier_name
+fileprivate extension Color {
+    typealias SystemColor = UIColor
 
-        self.init(.sRGB,
-                  red: Double(rgba.r),
-                  green: Double(rgba.g),
-                  blue: Double(rgba.b),
-                  opacity: Double(rgba.alpha))
-    }
+    var colorComponents: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)? {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
 
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let hex = try container.decode(String.self)
-
-        self.init(hex: hex)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(toHex)
-    }
-
-    var toHex: String? {
-        return toHex()
-    }
-
-    func toHex(alpha: Bool = false) -> String? {
-        guard let components = cgColor?.components, components.count >= 3 else {
+        guard SystemColor(self).getRed(&r, green: &g, blue: &b, alpha: &a) else {
+            // Pay attention that the color should be convertible into RGB format
+            // Colors using hue, saturation and brightness won't work
             return nil
         }
 
-        let r = Float(components[0])
-        let g = Float(components[1])
-        let b = Float(components[2])
-        var a = Float(1.0)
-
-        if components.count >= 4 {
-            a = Float(components[3])
-        }
-
-        if alpha {
-            return String(format: "%02lX%02lX%02lX%02lX",
-                          lroundf(r * 255),
-                          lroundf(g * 255),
-                          lroundf(b * 255),
-                          lroundf(a * 255))
-        } else {
-            return String(format: "%02lX%02lX%02lX",
-                          lroundf(r * 255),
-                          lroundf(g * 255),
-                          lroundf(b * 255))
-        }
+        return (r, g, b, a)
     }
 }
 
-extension String {
-    func toRGBA() -> (r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) {
-        var hexSanitized = self.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
+extension Color: Codable {
+    enum CodingKeys: String, CodingKey {
+        case red, green, blue
+    }
 
-        var rgb: UInt64 = 0
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let r = try container.decode(Double.self, forKey: .red)
+        let g = try container.decode(Double.self, forKey: .green)
+        let b = try container.decode(Double.self, forKey: .blue)
 
-        var r: CGFloat = 0.0
-        var g: CGFloat = 0.0
-        var b: CGFloat = 0.0
-        var a: CGFloat = 1.0
+        self.init(red: r, green: g, blue: b)
+    }
 
-        let length = hexSanitized.count
-
-        Scanner(string: hexSanitized).scanHexInt64(&rgb)
-
-        if length == 6 {
-            r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-            g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-            b = CGFloat(rgb & 0x0000FF) / 255.0
-        } else if length == 8 {
-            r = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
-            g = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
-            b = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
-            a = CGFloat(rgb & 0x000000FF) / 255.0
+    public func encode(to encoder: Encoder) throws {
+        guard let colorComponents = self.colorComponents else {
+            return
         }
 
-        return (r, g, b, a)
+        var container = encoder.container(keyedBy: CodingKeys.self)
+
+        try container.encode(colorComponents.red, forKey: .red)
+        try container.encode(colorComponents.green, forKey: .green)
+        try container.encode(colorComponents.blue, forKey: .blue)
     }
 }
