@@ -54,6 +54,26 @@ class GroupDal {
         }
     }
 
+    func selectOneWithID(_ uuid: UUID, db: Connection? = nil) -> Group? {
+        do {
+            var res = Group(id: uuid, name: "")
+
+            try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
+                let groupToSelect = groups.filter(id == uuid.description)
+                for group in try db.prepare(groupToSelect) {
+                    res.name = group[name]
+                    res.color = Color(hex: group[color]) ?? Color.black
+                    break
+                }
+            })
+
+            return res
+        } catch {
+            print("GroupDal.selectOneWithID : " + error.localizedDescription)
+            return nil
+        }
+    }
+
     func insert(_ group: Group, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
             try createTable(db)
