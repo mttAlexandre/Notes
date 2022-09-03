@@ -22,10 +22,12 @@ class NoteDal {
     private let groups = Table("groups")
     private let groupId = Expression<String>("id")
 
+    private let dbURL: URL
     private let dbPath: String
 
     init(dbURL: URL) {
-        dbPath = dbURL.relativePath
+        self.dbURL = dbURL
+        self.dbPath = dbURL.relativePath
     }
 
     private func createTable(_ db: Connection) throws {
@@ -47,10 +49,30 @@ class NoteDal {
         do {
             var res = [Note]()
 
+            let groupDal = GroupDal(dbURL: dbURL)
+
             try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
                 for note in try db.prepare(notes) {
-                    res.append(Note(id: UUID(uuidString: note[id])!,
-                                    group: Group(name: ""),
+                    guard let noteID = UUID(uuidString: note[id]) else {
+                        print("NoteDal.selectAll : note id is not a UUID")
+                        try delete(note[id], db: db)
+                        continue
+                    }
+                    
+                    guard let groupID = UUID(uuidString: note[groupFK]) else {
+                        print("NoteDal.selectAll : Invalid groupFK UUID")
+                        try delete(note[id], db: db)
+                        continue
+                    }
+
+                    guard let group = groupDal.selectOneWithID(groupID, db: db) else {
+                        print("NoteDal.selectAll : No group found")
+                        try delete(note[id], db: db)
+                        continue
+                    }
+
+                    res.append(Note(id: noteID,
+                                    group: group,
                                     title: note[title],
                                     titleColor: Color(hex: note[titleColor]) ?? Color.black,
                                     content: note[content]))
@@ -88,8 +110,12 @@ class NoteDal {
     }
 
     func delete(_ note: Note, db: Connection? = nil) throws {
+        try delete(note.id.description, db: db)
+    }
+    
+    private func delete(_ idString: String, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
-            let noteToDelete = notes.filter(id == note.id.description)
+            let noteToDelete = notes.filter(id == idString)
             try db.run(noteToDelete.delete())
         })
     }

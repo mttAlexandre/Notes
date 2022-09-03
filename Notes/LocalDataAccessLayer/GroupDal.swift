@@ -41,7 +41,13 @@ class GroupDal {
 
             try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
                 for group in try db.prepare(groups) {
-                    res.append(Group(id: UUID(uuidString: group[id])!,
+                    guard let groupID = UUID(uuidString: group[id]) else {
+                        print("GroupDal.selectAll : group id is not a UUID")
+                        try delete(group[id], db: db)
+                        continue
+                    }
+                    
+                    res.append(Group(id: groupID,
                                      name: group[name],
                                      color: Color(hex: group[color]) ?? Color.black))
                 }
@@ -94,8 +100,12 @@ class GroupDal {
     }
 
     func delete(_ group: Group, db: Connection? = nil) throws {
+        try delete(group.id.description, db: db)
+    }
+    
+    private func delete(_ idString: String, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
-            let groupToDelete = groups.filter(id == group.id.description)
+            let groupToDelete = groups.filter(id == idString)
             try db.run(groupToDelete.delete())
         })
     }

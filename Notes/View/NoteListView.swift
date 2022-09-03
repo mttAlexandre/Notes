@@ -49,7 +49,7 @@ struct NoteListView: View {
         .listStyle(.sidebar)
         .cornerRadius(16)
         .toolbar { EditButton() }
-        .navigationTitle(notes.first!.group.name)
+        .navigationTitle(notes.first?.group.name ?? "")
     }
 
     private func delete(at offsets: IndexSet) {
