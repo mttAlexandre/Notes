@@ -46,7 +46,7 @@ class GroupDal {
                         try delete(group[id], db: db)
                         continue
                     }
-                    
+
                     res.append(Group(id: groupID,
                                      name: group[name],
                                      color: Color(hex: group[color]) ?? Color.black))
@@ -102,7 +102,7 @@ class GroupDal {
     func delete(_ group: Group, db: Connection? = nil) throws {
         try delete(group.id.description, db: db)
     }
-    
+
     private func delete(_ idString: String, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
             let groupToDelete = groups.filter(id == idString)

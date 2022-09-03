@@ -58,7 +58,7 @@ class NoteDal {
                         try delete(note[id], db: db)
                         continue
                     }
-                    
+
                     guard let groupID = UUID(uuidString: note[groupFK]) else {
                         print("NoteDal.selectAll : Invalid groupFK UUID")
                         try delete(note[id], db: db)
@@ -112,7 +112,7 @@ class NoteDal {
     func delete(_ note: Note, db: Connection? = nil) throws {
         try delete(note.id.description, db: db)
     }
-    
+
     private func delete(_ idString: String, db: Connection? = nil) throws {
         try DalHelpers.openConnectionFromPath(dbPath, orUseConnection: db, andExecute: { db in
             let noteToDelete = notes.filter(id == idString)
