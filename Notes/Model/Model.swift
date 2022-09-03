@@ -27,16 +27,20 @@ final class Model: ObservableObject {
     }
 
     func load() throws {
-#if DEBUG
-        try generateSampleData()
-        return
-#else
         let groupdDal = try instanciateGroupDal()
         let noteDal = try instanciateNoteDal()
 
         groups = groupdDal.selectAll()
         notes = noteDal.selectAll()
-#endif
+
+#if DEBUG
+        if groups.isEmpty && notes.isEmpty {
+            try generateSampleData()
+
+            groups = groupdDal.selectAll()
+            notes = noteDal.selectAll()
+        }
+ #endif
     }
 
     // MARK: - Group handling
@@ -138,22 +142,22 @@ final class Model: ObservableObject {
 
 #if DEBUG
     private func generateSampleData() throws {
-        groups = [
+        let defaultGroups = [
             Group(name: "🏠 Home"),
             Group(name: "📕 Recipes", color: .teal),
             Group(name: "💻 Work", color: .purple),
             Group(name: "🏖 Holidays", color: .mint)
         ]
 
-        notes = [
-            Note(group: groups[1], title: "🍩 Donuts", titleColor: .pink,
+        let defaultNotes = [
+            Note(group: defaultGroups[1], title: "🍩 Donuts", titleColor: .pink,
                  content: """
         **Ingredients :**
             - eggs
             - sugar
             - flour
         """),
-            Note(group: groups[1], title: "🍫 Chocolat cake", titleColor: .brown,
+            Note(group: defaultGroups[1], title: "🍫 Chocolat cake", titleColor: .brown,
                  content: """
         **Ingredients :**
             - chocolat
@@ -161,12 +165,12 @@ final class Model: ObservableObject {
             - sugar
             - flour
         """),
-            Note(group: groups[0], title: "🪴 Garden", titleColor: .green, content: ""),
-            Note(group: groups[2], title: "🚨 Deadlines", titleColor: .red, content: ""),
-            Note(group: groups[2], title: "☑ Todo", titleColor: .indigo, content: ""),
-            Note(group: groups[3], title: "🏔 Hikes", titleColor: .green, content: ""),
-            Note(group: groups[3], title: "⛈ Indoor activities", titleColor: .blue, content: ""),
-            Note(group: groups[3], title: "🧳 Bags", titleColor: .orange, content: "")
+            Note(group: defaultGroups[0], title: "🪴 Garden", titleColor: .green, content: ""),
+            Note(group: defaultGroups[2], title: "🚨 Deadlines", titleColor: .red, content: ""),
+            Note(group: defaultGroups[2], title: "☑ Todo", titleColor: .indigo, content: ""),
+            Note(group: defaultGroups[3], title: "🏔 Hikes", titleColor: .green, content: ""),
+            Note(group: defaultGroups[3], title: "⛈ Indoor activities", titleColor: .blue, content: ""),
+            Note(group: defaultGroups[3], title: "🧳 Bags", titleColor: .orange, content: "")
         ]
 
         let groupDal = try instanciateGroupDal()
@@ -177,11 +181,11 @@ final class Model: ObservableObject {
         try noteDal.dropTable(ifExists: true, db: noteConnection)
         try groupDal.dropTable(ifExists: true, db: groupConnection)
 
-        for group in groups {
+        for group in defaultGroups {
             try groupDal.insert(group, db: groupConnection)
         }
 
-        for note in notes {
+        for note in defaultNotes {
             try noteDal.insert(note, db: noteConnection)
         }
     }
