@@ -21,7 +21,7 @@ struct NoteListView: View {
     }
 
     var body: some View {
-        List {
+        List(selection: $selection) {
             ForEach(sortedNotes) { note in
                 NavigationLink(value: note) {
                     Text(note.title)
@@ -43,22 +43,21 @@ struct NoteListView: View {
                         .cornerRadius(5)
                 )
                 .contentShape(RoundedRectangle(cornerRadius: 5))
-                .onTapGesture {
-                    selection = note
-                }
             }
             .onDelete(perform: delete)
         }
         .listStyle(.sidebar)
         .cornerRadius(16)
-        .navigationTitle(notes.first!.group.name)
+        .toolbar { EditButton() }
+        .navigationTitle(notes.first?.group.name ?? "")
     }
 
     private func delete(at offsets: IndexSet) {
-        let noteToDelete = sortedNotes[offsets[offsets.startIndex]]
-
-        model.notes.removeAll {
-            $0 == noteToDelete
+        do {
+            let noteToDelete = sortedNotes[offsets[offsets.startIndex]]
+            try model.deleteNote(noteToDelete)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 

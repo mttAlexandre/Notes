@@ -7,6 +7,9 @@
 
 import XCTest
 @testable import Notes
+import SQLite
+import SQLiteObjc
+import SwiftUI
 
 final class NotesTests: XCTestCase {
 
@@ -18,19 +21,47 @@ final class NotesTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete.
-        // Check the results with assertions afterwards.
+// MARK: - DAL create tables
+
+    func testDalTablesCreation() throws {
+        let url = try FileManager.default.url(for: .documentDirectory,
+                                              in: .userDomainMask,
+                                              appropriateFor: nil,
+                                              create: false)
+            .appendingPathComponent("Storage.sqlite")
+        // test data
+        var group = Group(name: "DevGroup")
+        let note = Note(group: group, title: "DevNote")
+        // create dal instances
+        let groupDal = GroupDal(dbURL: url)
+        let noteDal = NoteDal(dbURL: url)
+        // keep connection for all operations
+        let groupConnection = try groupDal.getConnection()
+        let noteConnection = try noteDal.getConnection()
+        // drop tables
+        try noteDal.dropTable(ifExists: true, db: noteConnection)
+        try groupDal.dropTable(ifExists: true, db: groupConnection)
+        // insert test data
+        try groupDal.insert(group, db: groupConnection)
+        try noteDal.insert(note, db: noteConnection)
+        // modify inserted group
+        group.name = "Modified name"
+        try groupDal.update(group, db: groupConnection)
+        // get all groups
+        let groups = groupDal.selectAll(groupConnection)
+        // verify group count and update
+        XCTAssertEqual(groups.count, 1)
+        XCTAssertEqual(groups.first!.name, "Modified name")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testColorCodable() throws {
+        for _ in 0...500 {
+            let colorA = Color.random
+            let hex = colorA.toHex()
+            XCTAssertNotNil(hex)
+            let colorB = Color(hex: hex!)
+            XCTAssertNotNil(colorB)
+            XCTAssertEqual(colorA.description, colorB!.description)
         }
     }
 

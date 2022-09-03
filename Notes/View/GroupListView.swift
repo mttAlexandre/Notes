@@ -21,7 +21,7 @@ struct GroupListView: View {
     }
 
     var body: some View {
-        List {
+        List(selection: $selection) {
             ForEach(sortedGroups) { group in
                 NavigationLink(value: group) {
                     Text(group.name)
@@ -43,24 +43,19 @@ struct GroupListView: View {
                         .cornerRadius(5)
                 )
                 .contentShape(RoundedRectangle(cornerRadius: 5))
-                .onTapGesture {
-                    selection = group
-                }
             }
             .onDelete(perform: delete)
         }
+        .toolbar { EditButton() }
         .navigationTitle("Notes 📝")
     }
 
     private func delete(at offsets: IndexSet) {
-        let groupToDelete = sortedGroups[offsets[offsets.startIndex]]
-        // delete all notes in this group
-        model.notes.removeAll {
-            $0.group == groupToDelete
-        }
-        // delete the group itself
-        model.groups.removeAll {
-            $0 == groupToDelete
+        do {
+            let groupToDelete = sortedGroups[offsets[offsets.startIndex]]
+            try model.deleteGroup(groupToDelete)
+        } catch {
+            print(error.localizedDescription)
         }
     }
 
