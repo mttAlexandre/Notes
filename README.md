@@ -13,7 +13,7 @@ Everything is subject to changes as some steps are new to me.
 - [x] Add some style
 - [x] Extand to iPadOS.  
       Tested on iPhone & iPad at the same time.
-- [ ] Add local storage (SQLite).  
+- [x] Add local storage (SQLite).  
       It will be a backup in case the device can't access CloudKit. I think about FMDB.
 - [ ] Use CloudKit to sync data between devices.  
       CK private database
