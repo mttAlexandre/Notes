@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0045D4128C34DF000DBFF46 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F0045D4028C34DF000DBFF46 /* MarkdownUI */; };
+		F04675A328C35AFD00F86935 /* FileManager+deleteFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04675A228C35AFD00F86935 /* FileManager+deleteFile.swift */; };
+		F04675A528C35D2400F86935 /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = F04675A428C35D2400F86935 /* MarkdownUI */; };
 		F048CCF828BB5C97003A6ED8 /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048CCF728BB5C97003A6ED8 /* NoteDetailView.swift */; };
 		F048CCFA28BB5CFA003A6ED8 /* NotePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */; };
 		F04F9AF028B268C400D6BE35 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F9AEF28B268C400D6BE35 /* Model.swift */; };
@@ -52,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F04675A228C35AFD00F86935 /* FileManager+deleteFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+deleteFile.swift"; sourceTree = "<group>"; };
 		F048CCF728BB5C97003A6ED8 /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 		F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePreviewView.swift; sourceTree = "<group>"; };
 		F04F9AEF28B268C400D6BE35 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0BB0E8B28BD20F500671503 /* SQLite in Frameworks */,
+				F0045D4128C34DF000DBFF46 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +100,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0BB0E9028BD439200671503 /* SQLite in Frameworks */,
+				F04675A528C35D2400F86935 /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +216,7 @@
 				F0BA8A8528B2210900BBC88D /* Color+Codable.swift */,
 				F059162A28C1400100485D37 /* Color+hex.swift */,
 				F0A5DE6B28B6B78F00C0FDA9 /* Color+random.swift */,
+				F04675A228C35AFD00F86935 /* FileManager+deleteFile.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -240,6 +247,7 @@
 			name = Notes;
 			packageProductDependencies = (
 				F0BB0E8A28BD20F500671503 /* SQLite */,
+				F0045D4028C34DF000DBFF46 /* MarkdownUI */,
 			);
 			productName = Notes;
 			productReference = F09FE96B28B167B800D00317 /* Notes.app */;
@@ -261,6 +269,7 @@
 			name = NotesTests;
 			packageProductDependencies = (
 				F0BB0E8F28BD439200671503 /* SQLite */,
+				F04675A428C35D2400F86935 /* MarkdownUI */,
 			);
 			productName = NotesTests;
 			productReference = F09FE97B28B167BA00D00317 /* NotesTests.xctest */;
@@ -318,6 +327,7 @@
 			mainGroup = F09FE96228B167B700D00317;
 			packageReferences = (
 				F0BB0E8928BD20F500671503 /* XCRemoteSwiftPackageReference "SQLite.swift" */,
+				F0045D3F28C34DF000DBFF46 /* XCRemoteSwiftPackageReference "MarkdownUI" */,
 			);
 			productRefGroup = F09FE96C28B167B800D00317 /* Products */;
 			projectDirPath = "";
@@ -391,6 +401,7 @@
 				F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */,
 				F0BB0E8628BD155D00671503 /* GroupDal.swift in Sources */,
 				F04F9AF228B2BF7800D6BE35 /* EditNoteView.swift in Sources */,
+				F04675A328C35AFD00F86935 /* FileManager+deleteFile.swift in Sources */,
 				F09FE97128B167B800D00317 /* ContentView.swift in Sources */,
 				F0BB0E8828BD157100671503 /* NoteDal.swift in Sources */,
 				F09FE99B28B1742100D00317 /* GroupListView.swift in Sources */,
@@ -728,6 +739,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F0045D3F28C34DF000DBFF46 /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		F0BB0E8928BD20F500671503 /* XCRemoteSwiftPackageReference "SQLite.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/stephencelis/SQLite.swift.git";
@@ -739,6 +758,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F0045D4028C34DF000DBFF46 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0045D3F28C34DF000DBFF46 /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
+		};
+		F04675A428C35D2400F86935 /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F0045D3F28C34DF000DBFF46 /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
+		};
 		F0BB0E8A28BD20F500671503 /* SQLite */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F0BB0E8928BD20F500671503 /* XCRemoteSwiftPackageReference "SQLite.swift" */;
