@@ -151,12 +151,13 @@ final class Model: ObservableObject {
 
         let defaultNotes = [
             Note(group: defaultGroups[1], title: "🍩 Donuts", titleColor: .pink,
-                 content: """
-        **Ingredients :**
-            - eggs
-            - sugar
-            - flour
-        """),
+                 content:
+        #"""
+        # **Ingredients :**
+            1. eggs
+            2. sugar
+            3. flour
+        """#),
             Note(group: defaultGroups[1], title: "🍫 Chocolat cake", titleColor: .brown,
                  content: """
         **Ingredients :**

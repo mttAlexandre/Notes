@@ -21,7 +21,7 @@ struct NoteDetailView: View {
                 }
                 .tag(0)
 
-            NotePreviewView(noteContent: note.content)
+            NotePreviewView(noteContent: note.content, noteColor: note.titleColor)
                 .tabItem {
                     Label("View", systemImage: "note.text")
                 }
