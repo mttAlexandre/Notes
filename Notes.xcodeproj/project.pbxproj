@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C4B168429115606007F672C /* CloudKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B168329115606007F672C /* CloudKitTests.swift */; };
+		5C4B168629115694007F672C /* CloudKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4B168529115694007F672C /* CloudKitService.swift */; };
+		5CA21E97292589CD00F30870 /* String+localizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA21E96292589CD00F30870 /* String+localizedError.swift */; };
 		F048CCF828BB5C97003A6ED8 /* NoteDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048CCF728BB5C97003A6ED8 /* NoteDetailView.swift */; };
 		F048CCFA28BB5CFA003A6ED8 /* NotePreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */; };
 		F04F9AF028B268C400D6BE35 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04F9AEF28B268C400D6BE35 /* Model.swift */; };
@@ -52,6 +55,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C4B1682290FC7A8007F672C /* Notes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Notes.entitlements; sourceTree = "<group>"; };
+		5C4B168329115606007F672C /* CloudKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitTests.swift; sourceTree = "<group>"; };
+		5C4B168529115694007F672C /* CloudKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitService.swift; sourceTree = "<group>"; };
+		5CA21E96292589CD00F30870 /* String+localizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+localizedError.swift"; sourceTree = "<group>"; };
 		F048CCF728BB5C97003A6ED8 /* NoteDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteDetailView.swift; sourceTree = "<group>"; };
 		F048CCF928BB5CFA003A6ED8 /* NotePreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePreviewView.swift; sourceTree = "<group>"; };
 		F04F9AEF28B268C400D6BE35 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -132,6 +139,7 @@
 		F09FE96D28B167B800D00317 /* Notes */ = {
 			isa = PBXGroup;
 			children = (
+				5C4B1682290FC7A8007F672C /* Notes.entitlements */,
 				F0BB0E9128BD448500671503 /* Info.plist */,
 				F0A5DE6D28B6BF7C00C0FDA9 /* TODO.rtf */,
 				F09FE97028B167B800D00317 /* ContentView.swift */,
@@ -142,6 +150,7 @@
 				F09FE9A028B1747100D00317 /* Model */,
 				F09FE97428B167B900D00317 /* Preview Content */,
 				F09FE99928B173EA00D00317 /* View */,
+				5C4B168529115694007F672C /* CloudKitService.swift */,
 			);
 			path = Notes;
 			sourceTree = "<group>";
@@ -158,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				F09FE97F28B167BA00D00317 /* NotesTests.swift */,
+				5C4B168329115606007F672C /* CloudKitTests.swift */,
 			);
 			path = NotesTests;
 			sourceTree = "<group>";
@@ -210,6 +220,7 @@
 				F0BA8A8528B2210900BBC88D /* Color+Codable.swift */,
 				F059162A28C1400100485D37 /* Color+hex.swift */,
 				F0A5DE6B28B6B78F00C0FDA9 /* Color+random.swift */,
+				5CA21E96292589CD00F30870 /* String+localizedError.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -383,9 +394,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C4B168629115694007F672C /* CloudKitService.swift in Sources */,
 				F04F9AF028B268C400D6BE35 /* Model.swift in Sources */,
 				F0A5DE6C28B6B78F00C0FDA9 /* Color+random.swift in Sources */,
 				F0BA8A8328B2173D00BBC88D /* Group.swift in Sources */,
+				5CA21E97292589CD00F30870 /* String+localizedError.swift in Sources */,
 				F048CCF828BB5C97003A6ED8 /* NoteDetailView.swift in Sources */,
 				F059162B28C1400100485D37 /* Color+hex.swift in Sources */,
 				F0BA8A8628B2210900BBC88D /* Color+Codable.swift in Sources */,
@@ -407,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C4B168429115606007F672C /* CloudKitTests.swift in Sources */,
 				F09FE98028B167BA00D00317 /* NotesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -555,6 +569,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Notes/Notes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Notes/Preview Content\"";
@@ -574,6 +590,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amomtt.Notes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -585,6 +602,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Notes/Notes.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Notes/Preview Content\"";
@@ -604,6 +623,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.amomtt.Notes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
